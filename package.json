@@ -5,7 +5,7 @@
   "main": "build/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel source --out-dir build",
+    "build": "rimraf build && babel source --out-dir build",
     "prepublish": "npm run format && npm run lint && nsp check && npm run build",
     "lint": "eslint source",
     "format": "prettier-standard \"source/**/*.js\""
@@ -26,7 +26,8 @@
     "eslint-plugin-promise": "3.5.0",
     "eslint-plugin-standard": "3.0.1",
     "nsp": "2.8.0",
-    "prettier-standard": "6.0.0"
+    "prettier-standard": "6.0.0",
+    "rimraf": "2.6.2"
   },
   "module": "source/index.js",
   "files": [
