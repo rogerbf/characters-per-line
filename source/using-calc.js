@@ -12,4 +12,12 @@ export default (
     }
   } = {}
 ) =>
-  `calc(${fontSize.min}px + ${(fontSize.max - fontSize.min)} * ((100vw - ${viewport.min}px) / ${viewport.max - viewport.min}))`
+  `
+  font-size: calc(${fontSize.min}px + ${(fontSize.max - fontSize.min)} * ((100vw - ${viewport.min}px) / ${viewport.max - viewport.min}));
+  @media screen and (max-width: ${viewport.min}px) {
+    font-size: ${fontSize.min}px;
+  }
+  @media screen and (min-width: ${viewport.max}px) {
+    font-size: ${fontSize.max}px
+  }
+  `
