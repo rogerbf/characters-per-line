@@ -12,7 +12,7 @@ export const makeFluid = (
   } = {}
 ) => {
   const target = targetElement.constructor.name === `String` ? document.querySelector(targetElement) : targetElement
-  const dynamic = `calc(${fontSize.min}px + ${(fontSize.max - fontSize.min)} * ((100vw - ${width.min}px) / ${width.max - width.min}))`
+
   const lowerLimit = window.matchMedia(`(max-width: ${width.min}px)`)
   const upperLimit = window.matchMedia(`(min-width: ${width.max}px)`)
 
@@ -22,7 +22,7 @@ export const makeFluid = (
     } else if (upperLimit.matches) {
       target.style.fontSize = `${fontSize.max}px`
     } else {
-      target.style.fontSize = dynamic
+      target.style.fontSize = `calc(${fontSize.min}px + ${(fontSize.max - fontSize.min)} * ((100vw - ${width.min}px) / ${width.max - width.min}))`
     }
   }
 
