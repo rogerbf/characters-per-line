@@ -1,4 +1,4 @@
-export const makeFluid = (
+export const makeElementTextFluid = (
   {
     targetElement = `html`,
     fontSize = {
