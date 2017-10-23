@@ -1,32 +1,36 @@
 export const makeFluid = (
   {
-    targetElementSelector = `html`,
+    targetElement = `html`,
     fontSize = {
       min: 17,
       max: 22
     },
-    viewport = {
+    width = {
       min: 576,
       max: 1200
     }
   } = {}
 ) => {
-  const target = document.querySelector(targetElementSelector)
-  const fluid = `calc(${fontSize.min}px + ${(fontSize.max - fontSize.min)} * ((100vw - ${viewport.min}px) / ${viewport.max - viewport.min}))`
-  const lowerLimit = window.matchMedia(`(max-width: ${viewport.min}px)`)
-  const upperLimit = window.matchMedia(`(min-width: ${viewport.max}px)`)
+  const target = targetElement.constructor.name === `String` ? document.querySelector(targetElement) : targetElement
+  const dynamic = `calc(${fontSize.min}px + ${(fontSize.max - fontSize.min)} * ((100vw - ${width.min}px) / ${width.max - width.min}))`
+  const lowerLimit = window.matchMedia(`(max-width: ${width.min}px)`)
+  const upperLimit = window.matchMedia(`(min-width: ${width.max}px)`)
+
   const handleLimitChange = () => {
     if (lowerLimit.matches) {
       target.style.fontSize = `${fontSize.min}px`
     } else if (upperLimit.matches) {
       target.style.fontSize = `${fontSize.max}px`
     } else {
-      target.style.fontSize = fluid
+      target.style.fontSize = dynamic
     }
   }
+
   lowerLimit.addListener(handleLimitChange)
   upperLimit.addListener(handleLimitChange)
+
   handleLimitChange()
+
   return () => {
     lowerLimit.removeListener(handleLimitChange)
     upperLimit.removeListener(handleLimitChange)
